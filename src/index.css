@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,10 +15,7 @@
 }
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+width: 100%;  
 }
 
 a {
@@ -31,12 +28,19 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 0; 
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
+
+
+.Header{
+  font-size: 1.5rem; 
+  padding: .8rem; 
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+}
+
 
 h1 {
   font-size: 3.2em;
