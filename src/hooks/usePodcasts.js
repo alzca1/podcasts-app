@@ -26,6 +26,7 @@ export default function usePodcasts() {
           data.feed.lastRefreshed = new Date();
 
           let stringifiedData = JSON.stringify(data.feed);
+          localStorage.setItem('podcastsStoredInfo', stringifiedData)
 
           setPodcastsInfo(stringifiedData);
         })
