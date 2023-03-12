@@ -28,7 +28,7 @@ export default function usePodcasts() {
           let stringifiedData = JSON.stringify(data.feed);
           localStorage.setItem('podcastsStoredInfo', stringifiedData)
 
-          setPodcastsInfo(stringifiedData);
+          setPodcastsInfo(data.feed);
         })
         .catch((error) => {
           console.log(`Ooops, there was an error: ${error}`);
