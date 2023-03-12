@@ -6,6 +6,8 @@ const podcastListURL = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/ge
 export default function usePodcasts() {
   const [podcastsInfo, setPodcastsInfo] = useState({});
   const [fetchIsNeeded, setFetchIsNeeded] = useState(true);
+  const [currentPodcast, setCurrentPodcast] = useState(null);
+
 
   function fetchPodcasts() {
     const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsStoredInfo'));
@@ -38,9 +40,21 @@ export default function usePodcasts() {
 
   function fetchPodcastInfo(podcastId) {
     fetch(`https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`)
-    .then(response => response.json())
-    .then(data => console.log(data))
+      .then((response) => response.json())
+      .then((data) => {
+        const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsStoredInfo'));
+
+        if (podcastsInfoFromLocalStorage) {
+          let filteredPodcastInfo = podcastsInfoFromLocalStorage.entry.find(
+            (podcast) => podcast.id.attributes['im:id'] === podcastId
+          );
+          setCurrentPodcast({
+            podcastInfo: filteredPodcastInfo,
+            episodesInfo: data,
+          });
+        }
+      });
   }
 
-  return { fetchPodcasts, podcastsInfo, fetchPodcastInfo };
+  return { fetchPodcasts, podcastsInfo, fetchPodcastInfo , currentPodcast};
 }
