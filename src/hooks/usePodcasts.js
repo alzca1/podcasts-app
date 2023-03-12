@@ -7,7 +7,7 @@ export default function usePodcasts() {
   const [podcastsInfo, setPodcastsInfo] = useState({});
   const [fetchIsNeeded, setFetchIsNeeded] = useState(true);
 
-  function fetchShipments() {
+  function fetchPodcasts() {
     const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsStoredInfo'));
 
     if (podcastsInfoFromLocalStorage) {
@@ -36,5 +36,11 @@ export default function usePodcasts() {
     }
   }
 
-  return { fetchShipments, podcastsInfo };
+  function fetchPodcastInfo(podcastId) {
+    fetch(`https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`)
+    .then(response => response.json())
+    .then(data => console.log(data))
+  }
+
+  return { fetchPodcasts, podcastsInfo, fetchPodcastInfo };
 }
