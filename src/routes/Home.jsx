@@ -5,11 +5,11 @@ import usePodcasts from '../hooks/usePodcasts';
 export default function Home() {
   const [query, setQuery] = useState('');
 
-  const { fetchShipments, podcastsInfo } = usePodcasts();
+  const { fetchPodcasts, podcastsInfo } = usePodcasts();
 
   useEffect(() => {
     const getPodcasts = async () => {
-      let podcastRequest = await fetchShipments();
+      let podcastRequest = await fetchPodcasts();
     };
     getPodcasts();
   }, []);
