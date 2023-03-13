@@ -109,19 +109,11 @@ body {
   display: flex; 
   justify-content: space-between;
   align-items: flex-start;
-  gap: 5rem; 
-}
-
-.Podcast .episodes-container .episodesCount-container{
-  grid-area: "header-episode";
-  border: 1px solid rgba(237, 235, 235, 0.9);
-  padding: .7rem 1rem;
-  font-size: 1.3rem; 
-  font-weight: 600;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+  gap: 6rem; 
 }
 
 .Podcast .podcastWrapper-container{
+  flex: 1; 
   border: 1px solid rgba(237, 235, 235, 0.9);
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
   padding: 1.5rem 1rem; 
@@ -129,6 +121,22 @@ body {
   flex-direction: column;
   max-width: 300px; 
 }
+
+.Podcast .episodes-container{
+  flex:1; 
+}
+
+.Podcast .episodes-container .episodesCount-container{
+  padding: .7rem 1rem;
+  font-size: 1.3rem; 
+  font-weight: 600;
+}
+
+.table-body .table-row:nth-child(odd){
+  background-color: #F9F9F9;
+  border: 1px 0 1px 0 rgba(237, 235, 235, 0.9);
+}
+
 
 .Podcast .podcastWrapper-container img{
   text-align: center;
@@ -152,9 +160,6 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.084); 
   padding: .7rem; 
 }
-
-
-
 
 
 h1 {

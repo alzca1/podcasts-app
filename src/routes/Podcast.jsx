@@ -7,6 +7,7 @@ export default function Podcast() {
   const { podcastId, episodeId } = useParams();
   const { fetchPodcastInfo, currentPodcast } = usePodcasts();
   const [podcastWrapper, setPodcastWrapper] = useState(null);
+  const [episodeInfo, setEpisodeInfo] = useState(null);
 
   useEffect(() => {
     const getPodcastInfo = async () => {
@@ -33,6 +34,13 @@ export default function Podcast() {
     }
   }
 
+  function handleEpisodeInfo(episodeId) {
+    let episode = currentPodcast.episodesInfo.results.find((episode) => episode.trackId == episodeId);
+
+    console.log(episode);
+    setEpisodeInfo(episode);
+  }
+
   return (
     <>
       <div className='Podcast'>
@@ -56,13 +64,12 @@ export default function Podcast() {
             <div className='episodesList-container'>
               <div className='table-header'>
                 <div className='table-row'>
-                <span>Title</span>
-                <span>Date</span>
-                <span>Duration</span>
+                  <span>Title</span>
+                  <span>Date</span>
+                  <span>Duration</span>
                 </div>
               </div>
               <div className='table-body'>
-                
                 {currentPodcast?.episodesInfo?.results.map((podcast, index) => {
                   return (
                     index > 0 && (
@@ -84,7 +91,7 @@ export default function Podcast() {
             </div>
           </div>
         )}
-        <Outlet />
+        <Outlet context={{ episodeInfo: episodeInfo }} />
       </div>
     </>
   );
