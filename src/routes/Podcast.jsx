@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import usePodcasts from '../hooks/usePodcasts';
-import {format, intervalToDuration} from 'date-fns'
+import { format, intervalToDuration } from 'date-fns';
 
 export default function Podcast() {
   const { podcastId, episodeId } = useParams();
@@ -19,7 +19,6 @@ export default function Podcast() {
   useEffect(() => {
     console.log('currentPodcast', currentPodcast);
   }, [currentPodcast]);
-
 
   function getEpisodeDuration(durationMiliseconds) {
     let duration = intervalToDuration({ start: 0, end: durationMiliseconds });
@@ -55,20 +54,37 @@ export default function Podcast() {
               <span>Episodes: {currentPodcast.episodesInfo.resultCount}</span>
             </div>
             <div className='episodesList-container'>
-            {currentPodcast?.episodesInfo?.results.map((podcast) => {
-              return (
-                <Link to={`/podcast/${podcastId}/episode/${podcast.trackId}`} key={podcast.trackId} onClick={() => handleEpisodeInfo(podcast.trackId)}>
-                  <div>
-                    <p>{podcast.trackName}</p>
-                    <span>{format(new Date(podcast.releaseDate), 'dd/M/yyyy')}</span>
-                    <span>{getEpisodeDuration(podcast.trackTimeMillis)}</span>
-                  </div>
-                </Link>
-              );
-            })}
+              <div className='table-header'>
+                <div className='table-row'>
+                <span>Title</span>
+                <span>Date</span>
+                <span>Duration</span>
+                </div>
+              </div>
+              <div className='table-body'>
+                
+                {currentPodcast?.episodesInfo?.results.map((podcast, index) => {
+                  return (
+                    index > 0 && (
+                      <div className='table-row'>
+                        <Link
+                          to={`/podcast/${podcastId}/episode/${podcast.trackId}`}
+                          key={podcast.trackId}
+                          onClick={() => handleEpisodeInfo(podcast.trackId)}
+                        >
+                          <span>{podcast.trackName}</span>
+                        </Link>
+                        <span>{format(new Date(podcast.releaseDate), 'dd/M/yyyy')}</span>
+                        <span>{getEpisodeDuration(podcast.trackTimeMillis)}</span>
+                      </div>
+                    )
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}
+        <Outlet />
       </div>
     </>
   );

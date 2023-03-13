@@ -104,6 +104,59 @@ body {
 }
 
 
+.Podcast{
+  padding: 1rem 2rem; 
+  display: flex; 
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 5rem; 
+}
+
+.Podcast .episodes-container .episodesCount-container{
+  grid-area: "header-episode";
+  border: 1px solid rgba(237, 235, 235, 0.9);
+  padding: .7rem 1rem;
+  font-size: 1.3rem; 
+  font-weight: 600;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+}
+
+.Podcast .podcastWrapper-container{
+  border: 1px solid rgba(237, 235, 235, 0.9);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+  padding: 1.5rem 1rem; 
+  display: flex; 
+  flex-direction: column;
+  max-width: 300px; 
+}
+
+.Podcast .podcastWrapper-container img{
+  text-align: center;
+  margin: 0 auto; 
+  transform: scale(1.2);
+  padding: 1rem 0; 
+  margin-bottom: 1rem; 
+}
+
+.Podcast .episodesList-container{
+  border: 1px solid rgba(237, 235, 235, 0.9);
+  padding: .7rem 1rem; 
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+  margin-top: 1rem; 
+}
+
+
+.table-header .table-row, .table-body .table-row{
+  display: grid; 
+  grid-template-columns: 8fr 1fr 1fr;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.084); 
+  padding: .7rem; 
+}
+
+
+
+
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
