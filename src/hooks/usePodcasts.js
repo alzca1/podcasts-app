@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 const podcastListURL = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
 
 export default function usePodcasts() {
-  const [podcastsInfo, setPodcastsInfo] = useState({});
+  const [podcastsInfo, setPodcastsInfo] = useState([]);
   const [fetchIsNeeded, setFetchIsNeeded] = useState(true);
   const [currentPodcast, setCurrentPodcast] = useState(null);
 
 
   function fetchPodcasts() {
-    const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsStoredInfo'));
+    const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsListInfo'));
 
     if (podcastsInfoFromLocalStorage) {
       const difference = differenceInHours(new Date(), new Date(podcastsInfoFromLocalStorage.lastRefreshed));
@@ -26,11 +26,22 @@ export default function usePodcasts() {
         .then((response) => response.json())
         .then((data) => {
           data.feed.lastRefreshed = new Date();
+          const refinedData = []; 
 
-          let stringifiedData = JSON.stringify(data.feed);
-          localStorage.setItem('podcastsStoredInfo', stringifiedData)
+          data.feed.entry.map(podcast => {
+            const podcastInfo = {
+              id: podcast.id.attributes['im:id'],
+              artist: podcast['im:artist'].label,
+              title: podcast.title.label, 
+              cover: podcast['im:image'][2].label,
+            }
+            refinedData.push(podcastInfo)
+          })
 
-          setPodcastsInfo(data.feed);
+          let stringifiedData = JSON.stringify(refinedData);
+          localStorage.setItem('podcastsListInfo', stringifiedData)
+
+          setPodcastsInfo(refinedData);
         })
         .catch((error) => {
           console.log(`Ooops, there was an error: ${error}`);
