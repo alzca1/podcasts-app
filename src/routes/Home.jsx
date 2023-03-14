@@ -8,6 +8,7 @@ export default function Home() {
   const { fetchPodcasts, podcastsInfo } = usePodcasts();
 
   useEffect(() => {
+     
     const getPodcasts = async () => {
       let podcastRequest = await fetchPodcasts();
     };
@@ -15,14 +16,22 @@ export default function Home() {
   }, []);
 
   let filteredData = useMemo(
-    () =>
-      podcastsInfo &&
-      podcastsInfo?.entry?.filter((podcast) => {
+    () =>{
+      if(podcastsInfo && query !== ""){
         return (
-          podcast.title.label.toLowerCase().includes(query.toLowerCase()) ||
-          podcast['im:artist'].label.toLowerCase().includes(query.toLowerCase())
+          podcast.title.toLowerCase().includes(query.toLowerCase()) ||
+          podcast.artist.toLowerCase().includes(query.toLowerCase())
         );
-      }),
+      }
+      return podcastsInfo
+   /*    podcastsInfo &&
+      podcastsInfo.filter((podcast) => {
+        return (
+          podcast.title.toLowerCase().includes(query.toLowerCase()) ||
+          podcast.artist.toLowerCase().includes(query.toLowerCase())
+        );
+      }) */
+    },
     [podcastsInfo, query]
   );
 
@@ -35,12 +44,12 @@ export default function Home() {
       <div className='podcasts-container'>
         {filteredData?.map((podcast) => {
           return (
-            <Link key={podcast.id.attributes['im:id']} to={`/podcast/${podcast.id.attributes['im:id']}`}>
-              <div key={podcast.id.attributes['im:id']} className='podcast-presentation'>
-                <img src={podcast['im:image'][2].label} alt='podcast-image' />
+            <Link key={podcast.id} to={`/podcast/${podcast.id}`}>
+              <div key={podcast.id} className='podcast-presentation'>
+                <img src={podcast.cover} alt='podcast-image' />
                 <div className='podcast-presentation-info'>
-                  <p title={podcast.title.label}>{podcast.title.label}</p>
-                  <span title={`Author: ${podcast['im:artist'].label}`}>Author: {podcast['im:artist'].label}</span>
+                  <p title={podcast.title}>{podcast.title}</p>
+                  <span title={`Author: ${podcast.artist}`}>Author: {podcast.artist}</span>
                 </div>
               </div>
             </Link>
