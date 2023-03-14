@@ -50,10 +50,16 @@ export default function Podcast() {
               src={currentPodcast?.podcastInfo['im:image'][2].label}
               alt={`${currentPodcast?.episodesInfo.collectionName} podcast cover`}
             />
-            <p>{currentPodcast?.podcastInfo.title.label}</p>
-            <span>by: {currentPodcast?.podcastInfo['im:artist'].label}</span>
-            <span>Description:</span>
-            <p>{currentPodcast?.podcastInfo?.summary?.label}</p>
+            <div className='line'></div>
+            <div className='basic-info'>
+              <span className='podcast-title'>{currentPodcast?.podcastInfo.title.label}</span>
+              <span className='podcast-author'>by: {currentPodcast?.podcastInfo['im:artist'].label}</span>
+            </div>
+            <div className='line'></div>
+            <div className='podcast-description'>
+              <span className='description-title'>Description:</span>
+              <span className='description-summary'>{currentPodcast?.podcastInfo?.summary?.label}</span>
+            </div>
           </div>
         )}
         {currentPodcast && !episodeId && (
