@@ -113,6 +113,11 @@ body {
   gap: 6rem;
 }
 
+.Podcast a{
+  text-decoration: none;
+  color: inherit; 
+}
+
 .Podcast .podcastWrapper-container {
   flex: 1;
   border: 1px solid rgba(237, 235, 235, 0.9);
@@ -123,6 +128,8 @@ body {
   max-width: 300px;
   min-height: 400px;
 }
+
+
 
 .Podcast .podcastWrapper-container .line{
   border: 1px solid rgba(237, 235, 235, 0.9);
@@ -172,13 +179,15 @@ body {
   border: 1px 0 1px 0 rgba(237, 235, 235, 0.9);
 }
 
+.Podcast .image-container{
+ text-align: center;
+ padding-bottom: 1.15rem;
+}
 
-.Podcast .podcastWrapper-container img {
-  text-align: center;
-  margin: 0 auto;
-  transform: scale(1.2);
-  padding: 1rem 0;
-  margin-bottom: 1rem;
+
+.Podcast .image-container img {
+  min-width: 80%;
+  object-fit: cover;
 }
 
 .Podcast .episodesList-container {

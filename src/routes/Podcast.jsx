@@ -46,15 +46,19 @@ export default function Podcast() {
       <div className='Podcast'>
         {currentPodcast && (
           <div className='podcastWrapper-container'>
-            <img
-              src={currentPodcast?.podcastInfo['im:image'][2].label}
-              alt={`${currentPodcast?.episodesInfo.collectionName} podcast cover`}
-            />
-            <div className='line'></div>
-            <div className='basic-info'>
-              <span className='podcast-title'>{currentPodcast?.podcastInfo.title.label}</span>
-              <span className='podcast-author'>by: {currentPodcast?.podcastInfo['im:artist'].label}</span>
-            </div>
+            <Link to={`/podcast/${podcastId}`}>
+              <div className='image-container'>
+                <img
+                  src={currentPodcast?.podcastInfo['im:image'][2].label}
+                  alt={`${currentPodcast?.episodesInfo.collectionName} podcast cover`}
+                />
+              </div>
+              <div className='line'></div>
+              <div className='basic-info'>
+                <span className='podcast-title'>{currentPodcast?.podcastInfo.title.label}</span>
+                <span className='podcast-author'>by: {currentPodcast?.podcastInfo['im:artist'].label}</span>
+              </div>
+            </Link>
             <div className='line'></div>
             <div className='podcast-description'>
               <span className='description-title'>Description:</span>
