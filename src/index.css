@@ -49,9 +49,16 @@ body {
 .Home .search-container {
   display: flex;
   justify-content: end;
+  align-items: center;
   gap: 1rem;
+  padding: 0 1rem; 
 }
 
+.search-container input{
+  padding: .4rem 1rem .4rem .4rem;
+  min-width: 250px; 
+  font-size: 1.1rem; 
+}
 
 .Home .podcasts-container {
   display: grid;
@@ -59,8 +66,8 @@ body {
   grid-auto-rows: 1fr;
   grid-column-gap: 1.3rem;
   grid-row-gap: 8rem;
-  justify-content: center;
-  padding: 9rem 0;
+  justify-content: space-between;
+  padding: 6rem 0;
 }
 
 .Home .podcast-presentation {

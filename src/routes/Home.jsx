@@ -15,31 +15,24 @@ export default function Home() {
     getPodcasts();
   }, []);
 
-  let filteredData = useMemo(
-    () =>{
-      if(podcastsInfo && query !== ""){
+  let filteredData = useMemo(() => {
+
+    if (podcastsInfo && query !== '') {
+      return podcastsInfo.filter((podcast) => {
         return (
           podcast.title.toLowerCase().includes(query.toLowerCase()) ||
           podcast.artist.toLowerCase().includes(query.toLowerCase())
         );
-      }
-      return podcastsInfo
-   /*    podcastsInfo &&
-      podcastsInfo.filter((podcast) => {
-        return (
-          podcast.title.toLowerCase().includes(query.toLowerCase()) ||
-          podcast.artist.toLowerCase().includes(query.toLowerCase())
-        );
-      }) */
-    },
-    [podcastsInfo, query]
-  );
+      });
+    }
+    return podcastsInfo;
+  }, [podcastsInfo, query]);
 
   return (
     <div className='Home'>
       <div className='search-container'>
         <span> {filteredData?.length}</span>
-        <input type='search' value={query} onChange={(e) => setQuery(e.target.value)} />
+        <input type='search' placeholder="Filter podcasts..." value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
       <div className='podcasts-container'>
         {filteredData?.map((podcast) => {

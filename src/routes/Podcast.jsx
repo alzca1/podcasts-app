@@ -17,9 +17,6 @@ export default function Podcast() {
     getPodcastInfo();
   }, []);
 
-  useEffect(() => {
-    console.log('currentPodcast', currentPodcast);
-  }, [currentPodcast]);
 
   function getEpisodeDuration(durationMiliseconds) {
     let duration = intervalToDuration({ start: 0, end: durationMiliseconds });
@@ -35,9 +32,7 @@ export default function Podcast() {
   }
 
   function handleEpisodeInfo(episodeId) {
-    let episode = currentPodcast.episodesInfo.results.find((episode) => episode.trackId == episodeId);
-
-    console.log(episode);
+    let episode = currentPodcast.episodesInfo.episodesData.find((episode) => episode.trackId == episodeId);
     setEpisodeInfo(episode);
   }
 
@@ -49,27 +44,27 @@ export default function Podcast() {
             <Link to={`/podcast/${podcastId}`}>
               <div className='image-container'>
                 <img
-                  src={currentPodcast?.podcastInfo['im:image'][2].label}
-                  alt={`${currentPodcast?.episodesInfo.collectionName} podcast cover`}
+                  src={currentPodcast?.podcastInfo?.cover}
+                  alt={`${currentPodcast?.podcastInfo?.title} podcast cover`}
                 />
               </div>
               <div className='line'></div>
               <div className='basic-info'>
-                <span className='podcast-title'>{currentPodcast?.podcastInfo.title.label}</span>
-                <span className='podcast-author'>by: {currentPodcast?.podcastInfo['im:artist'].label}</span>
+                <span className='podcast-title'>{currentPodcast?.podcastInfo?.title}</span>
+                <span className='podcast-author'>by: {currentPodcast?.podcastInfo?.artist}</span>
               </div>
             </Link>
             <div className='line'></div>
             <div className='podcast-description'>
               <span className='description-title'>Description:</span>
-              <span className='description-summary'>{currentPodcast?.podcastInfo?.summary?.label}</span>
+              <span className='description-summary'>{currentPodcast?.podcastInfo?.summary}</span>
             </div>
           </div>
         )}
         {currentPodcast && !episodeId && (
           <div className='episodes-container'>
             <div className='episodesCount-container'>
-              <span>Episodes: {currentPodcast.episodesInfo.resultCount}</span>
+              <span>Episodes: {currentPodcast?.episodesInfo?.episodesData.length - 1}</span>
             </div>
             <div className='episodesList-container'>
               <div className='table-header'>
@@ -80,7 +75,7 @@ export default function Podcast() {
                 </div>
               </div>
               <div className='table-body'>
-                {currentPodcast?.episodesInfo?.results.map((podcast, index) => {
+                {currentPodcast?.episodesInfo?.episodesData?.map((podcast, index) => {
                   return (
                     index > 0 && (
                       <div className='table-row'>
@@ -89,7 +84,7 @@ export default function Podcast() {
                           key={podcast.trackId}
                           onClick={() => handleEpisodeInfo(podcast.trackId)}
                         >
-                          <span>{podcast.trackName}</span>
+                          <span>{podcast.name}</span>
                         </Link>
                         <span>{format(new Date(podcast.releaseDate), 'dd/M/yyyy')}</span>
                         <span>{getEpisodeDuration(podcast.trackTimeMillis)}</span>
