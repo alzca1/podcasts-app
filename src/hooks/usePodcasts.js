@@ -1,5 +1,6 @@
 import { differenceInHours } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import LoadingInfoContext from '../contexts/LoadingInfoContext';
 
 const podcastListURL = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
 
@@ -8,9 +9,11 @@ export default function usePodcasts() {
   const [fetchPodcastListNeeded, setFetchPodcastListNeeded] = useState(true);
   const [fetchPodcastDetailNeeded, setFetchPodcastDetailNeeded] = useState(true)
   const [currentPodcast, setCurrentPodcast] = useState(null);
+  const [isLoading, setIsLoading] = useContext(LoadingInfoContext)
 
 
   function fetchPodcasts() {
+    setIsLoading(true)
     const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsListStoredInfo'));
 
     if (podcastsInfoFromLocalStorage) {
@@ -18,6 +21,9 @@ export default function usePodcasts() {
 
       if (difference < 24) {
         setPodcastsInfo(podcastsInfoFromLocalStorage.data);
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 600)
         return setFetchPodcastListNeeded(false);
       }
     }
@@ -45,16 +51,23 @@ export default function usePodcasts() {
 
           let stringifiedData = JSON.stringify(refinedData);
           localStorage.setItem('podcastsListStoredInfo', stringifiedData)
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 600)
 
           setPodcastsInfo(refinedData.data);
         })
         .catch((error) => {
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 600)
           console.log(`Ooops, there was an error while trying to fetch the list of podcasts => =>  ${error}`);
         });
     }
   }
 
   function fetchPodcastInfo(podcastId) {
+     setIsLoading(true)
 
     const podcastsDetailInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsDetailStoredInfo'))
     const podcastsInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsListStoredInfo'))
@@ -69,11 +82,11 @@ export default function usePodcasts() {
           podcastInfo: filteredPodcastListInfo,
           episodesInfo: filteredDetailInfo,
         });
-        
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 600)
        return setFetchPodcastDetailNeeded(false);
       }
-
-
     }
     
     if(fetchPodcastDetailNeeded){
@@ -117,8 +130,16 @@ export default function usePodcasts() {
             podcastInfo: filteredPodcastListInfo,
             episodesInfo: refinedData,
           });
+
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 600)
+
         })
         .catch((error) => {
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 600)
           console.log(`Ooops, there was an error while trying to fetch the list of episodes => =>  ${error}`);
         });
     }

@@ -1,19 +1,33 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Link, useLocation, useNavigation } from 'react-router-dom';
+import LoadingInfoContext from '../contexts/LoadingInfoContext';
 import usePodcasts from '../hooks/usePodcasts';
 
 export default function Home() {
   const [query, setQuery] = useState('');
-
   const { fetchPodcasts, podcastsInfo } = usePodcasts();
+  const [isLoading, setIsLoading] = useContext(LoadingInfoContext);
+
+let location = useLocation(); 
+
 
   useEffect(() => {
-     
     const getPodcasts = async () => {
       let podcastRequest = await fetchPodcasts();
     };
     getPodcasts();
   }, []);
+
+
+  useEffect(() => {
+    if(podcastsInfo){
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 600)
+    }
+  }, [location, podcastsInfo])
+
+ 
 
   let filteredData = useMemo(() => {
 
@@ -37,7 +51,7 @@ export default function Home() {
       <div className='podcasts-container'>
         {filteredData?.map((podcast) => {
           return (
-            <Link key={podcast.id} to={`/podcast/${podcast.id}`}>
+            <Link key={podcast.id} to={`/podcast/${podcast.id}`} >
               <div key={podcast.id} className='podcast-presentation'>
                 <img src={podcast.cover} alt='podcast-image' />
                 <div className='podcast-presentation-info'>

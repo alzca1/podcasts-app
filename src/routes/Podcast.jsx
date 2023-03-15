@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, Outlet, useLocation, useNavigation, useParams } from 'react-router-dom';
 import usePodcasts from '../hooks/usePodcasts';
 import { format, intervalToDuration } from 'date-fns';
+import LoadingInfoContext from '../contexts/LoadingInfoContext';
 
 export default function Podcast() {
   const { podcastId, episodeId } = useParams();
   const { fetchPodcastInfo, currentPodcast } = usePodcasts();
-  const [podcastWrapper, setPodcastWrapper] = useState(null);
   const [episodeInfo, setEpisodeInfo] = useState(null);
+  const [isLoading, setIsLoading] = useContext(LoadingInfoContext);
+  let location = useLocation(); 
+
 
   useEffect(() => {
+    //setIsLoading(true)
     const getPodcastInfo = async () => {
       let podcastInfo = await fetchPodcastInfo(podcastId);
     };
-
     getPodcastInfo();
+  
   }, []);
+
+  useEffect(() => {
+    if(!isLoading){
+      setIsLoading(true)
+    }
+    if(currentPodcast){
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 600)
+    }
+  }, [location])
+
 
 
   function getEpisodeDuration(durationMiliseconds) {

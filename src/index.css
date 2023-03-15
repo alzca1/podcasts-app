@@ -39,6 +39,8 @@ body {
   font-size: 1.5rem;
   padding: .8rem;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 4px 1px;
+  display: flex; 
+  justify-content: space-between;
 }
 
 
