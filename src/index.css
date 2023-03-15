@@ -195,7 +195,7 @@ body {
   font-weight: 600;
 }
 
-.Podcast episodesList-container .table-body .table-row:nth-child(odd) {
+.Podcast .episodesList-container .table-body .table-row:nth-child(odd) {
   background-color: #F9F9F9;
   border: 1px 0 1px 0 rgba(237, 235, 235, 0.9);
 }

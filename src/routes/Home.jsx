@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigation } from 'react-router-dom';
 import LoadingInfoContext from '../contexts/LoadingInfoContext';
@@ -49,19 +50,28 @@ let location = useLocation();
         <input type='search' placeholder="Filter podcasts..." value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
       <div className='podcasts-container'>
+        <AnimatePresence>
         {filteredData?.map((podcast) => {
           return (
-            <Link key={podcast.id} to={`/podcast/${podcast.id}`} >
-              <div key={podcast.id} className='podcast-presentation'>
-                <img src={podcast.cover} alt='podcast-image' />
-                <div className='podcast-presentation-info'>
-                  <p title={podcast.title}>{podcast.title}</p>
-                  <span title={`Author: ${podcast.artist}`}>Author: {podcast.artist}</span>
+            <motion.div
+              key={podcast.id}
+              initial={{  opacity: 0}}
+              animate={{  opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Link key={podcast.id} to={`/podcast/${podcast.id}`}>
+                <div key={podcast.id} className='podcast-presentation'>
+                  <img src={podcast.cover} alt='podcast-image' />
+                  <div className='podcast-presentation-info'>
+                    <p title={podcast.title}>{podcast.title}</p>
+                    <span title={`Author: ${podcast.artist}`}>Author: {podcast.artist}</span>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           );
         })}
+        </AnimatePresence>
       </div>
     </div>
   );
