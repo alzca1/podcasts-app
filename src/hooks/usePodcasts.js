@@ -28,6 +28,8 @@ export default function usePodcasts() {
       }
     }
 
+    
+
     if (fetchPodcastListNeeded) {
       fetch(podcastListURL)
         .then((response) => response.json())
@@ -90,8 +92,15 @@ export default function usePodcasts() {
     }
     
     if(fetchPodcastDetailNeeded){
-      fetch(`https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`)
-        .then((response) => response.json())
+      const podcastDetailUrl = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`;
+      const uri = encodeURIComponent(podcastDetailUrl)
+
+      fetch(`https://api.codetabs.com/v1/proxy?quest=${uri}`)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
         .then((data) => {
           const refinedData = {
             podcastId: podcastId,
