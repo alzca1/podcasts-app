@@ -45,7 +45,7 @@ let location = useLocation();
   return (
     <div className='Home'>
       <div className='search-container'>
-        <span> {filteredData?.length}</span>
+        <span>{filteredData?.length}</span>
         <input type='search' placeholder="Filter podcasts..." value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
       <div className='podcasts-container'>
