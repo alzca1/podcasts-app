@@ -94,7 +94,7 @@ export default function Podcast() {
                 {currentPodcast?.episodesInfo?.episodesData?.map((podcast, index) => {
                   return (
                     index > 0 && (
-                      <div className='table-row'>
+                      <div key={podcast.trackId} className='table-row' >
                         <Link
                           to={`/podcast/${podcastId}/episode/${podcast.trackId}`}
                           key={podcast.trackId}
