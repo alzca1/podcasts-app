@@ -35,27 +35,41 @@ export default function usePodcasts() {
         .then((response) => response.json())
         .then((data) => {
           const refinedData = {
-            data: [], 
-            lastRefreshed: new Date()
-          }; 
+            data: [],
+            lastRefreshed: new Date(),
+          };
 
-
-          data.feed.entry.map(podcast => {
+          data.feed.entry.map((podcast) => {
             const podcastInfo = {
               id: podcast.id.attributes['im:id'],
               artist: podcast['im:artist'].label,
-              title: podcast.title.label, 
+              title: podcast.title.label,
               cover: podcast['im:image'][2].label,
-              summary: podcast.summary.label
-            }
-            refinedData.data.push(podcastInfo)
-          })
+              summary: podcast.summary.label,
+            };
+            refinedData.data.push(podcastInfo);
+          });
+
+          // comprobamos si hay algún elemento en el listado de detalle de episodios
+          // guardado en localStorage para eliminar aquellos podcasts que ya no formen
+          // parte del listado de los 100 podcasts más populares. Con ello evitamos
+          // guardar más datos de los estrictamente necesarios.
+          const podcastsDetailInfoFromLocalStorage = JSON.parse(localStorage.getItem('podcastsDetailStoredInfo'));
+          if (podcastsDetailInfoFromLocalStorage) {
+            let newPodcastsDetailInfo = podcastsDetailInfoFromLocalStorage.filter((podcastDetailItem) => {
+              return refinedData.data.some((podcastListItem) => podcastDetailItem.podcastId === podcastListItem.id);
+            });
+
+            let stringifiedPodcastDetailList = JSON.stringify(newPodcastsDetailInfo);
+            localStorage.setItem('podcastsDetailStoredInfo', stringifiedPodcastDetailList);
+          }
 
           let stringifiedData = JSON.stringify(refinedData);
-          localStorage.setItem('podcastsListStoredInfo', stringifiedData)
+          localStorage.setItem('podcastsListStoredInfo', stringifiedData);
+
           setTimeout(() => {
-            setIsLoading(false)
-          }, 600)
+            setIsLoading(false);
+          }, 600);
 
           setPodcastsInfo(refinedData.data);
         })
