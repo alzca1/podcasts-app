@@ -1,5 +1,4 @@
-## Nombre del proyecto || Project Name
-Podcaster
+## Nombre del proyecto || Project Name : Podcaster
 
 SP: 
 Aplicación web para consultar el listado de los 100 podcasts más populares de iTunes, construida con React, React Context, React Router, Javascript y CSS.
